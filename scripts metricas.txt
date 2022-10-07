@@ -1,0 +1,28 @@
+----------1
+select b.department,c.job,sum(a.q1) as q1,sum(a.q2) as q2,sum(a.q3) as q3,sum(a.q4) as q4,sum(a.q5) as q5 from (
+select 
+case when codmes >= 202102 and codmes < 202105 then 1 else 0 end as q1,
+case when codmes >= 202105 and codmes < 202108 then 1 else 0 end as q2,
+case when codmes >= 202108 and codmes < 202111 then 1 else 0 end as q3,
+case when codmes >= 202111 and codmes < 202202 then 1 else 0 end as q4,
+case when codmes >= 202202 then 1 else 0 end as q5
+,d.*
+from (select *,convert(int,SUBSTRING(datetim,1,4)+SUBSTRING(datetim,6,2)) as codmes from hired_employees) d ) a
+inner join department b on a.department_id=b.id 
+inner join jobs c on a.job_id = c.id
+group by b.department,c.job
+order by b.department
+
+
+
+------------2
+select d.id,d.department,count(e.id) as hired from hired_employees e inner join department d 
+on e.department_id = d.id
+where SUBSTRING(e.datetim,1,4) = '2021'
+group by d.id,d.department
+having count(e.id) > (select avg(total) from (
+select b.id,b.department,count(a.id) as total from hired_employees a inner join department b 
+on a.department_id = b.id
+where SUBSTRING(a.datetim,1,4) = '2021'
+group by b.id,b.department ) c)
+order by count(e.id) desc

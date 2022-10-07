@@ -1,0 +1,6 @@
+challenge.py : carga de información histórica.
+challenge_p2.py: carga de transacciones, rest_api
+backup_one.py : operaciones asociadas a creación de backup
+endpoint_metricas.py: endpoint final para acceso a resultados de métricas
+principal.py: script main que llama a los otros
+script_metricas.txt : archivo con lógicas de sql para cálculo de resultados de métricas
