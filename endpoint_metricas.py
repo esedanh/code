@@ -29,6 +29,7 @@ class Metrica2(Resource):
         ans = cursor.fetchall()
         return {'id': [i[0] for i in ans],'department': [i[1] for i in ans],'hired': [i[2] for i in ans]} 
 
+
 api.add_resource(Metrica1, '/result1') 
 api.add_resource(Metrica2, '/result2') 
 
